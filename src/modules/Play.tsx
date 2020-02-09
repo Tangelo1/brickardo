@@ -1,4 +1,5 @@
 import React from 'react';
+import { Button } from 'carbon-components-react';
 //import Queue from './Queue';
 //import ArrowKeysReact from 'arrow-keys-react';
 
@@ -7,11 +8,11 @@ interface IPlayPageState {
 }
 
 interface IPlayPageProps {
-	messageWebSocket: WebSocket;
+	messageWebSocket?: WebSocket;
 }
 
 class Queue extends React.Component<IPlayPageProps, IPlayPageState> {
-	constructor(props: any) {
+	constructor(props: IPlayPageProps) {
 		super(props)
 		this.state = {
 			content: '',
@@ -41,13 +42,13 @@ class Queue extends React.Component<IPlayPageProps, IPlayPageState> {
 	}
 
 	sendRequest = (direction: string) => {
-		if (!this.props.messageWebSocket.CONNECTING) {
+		if (this.props.messageWebSocket) {
 			this.props.messageWebSocket.send(direction)
 		}
 	}
 
 	componentDidMount() {
-		this.focusGameDiv();
+		//this.focusGameDiv();
 	}
 
 	focusGameDiv = () => {
@@ -60,11 +61,14 @@ class Queue extends React.Component<IPlayPageProps, IPlayPageState> {
 	render() {
 		//{/*...ArrowKeysReact.events*/...}
 		return (
-		<div id='gameDiv'  tabIndex={0}>
-				<div className={'button-div'}><button onClick={() => this.sendRequest('L')}>Left</button></div>
-				<div className={'button-div'}><button onClick={() => this.sendRequest('R')}>Right</button></div>
-				<div className={'button-div'}><button onClick={() => this.sendRequest('F')}>Forward</button></div>
-				<div className={'button-div'}><button onClick={() => this.sendRequest('B')}>Back</button></div>
+			<div>
+				<img width='200px' height='200px'src='https://brickhack.io/assets/bh-logos/brickhack-6-ec3ad60c77e9a5fda248640e5febf72cd59245e3e3407dea968bf343d987dc07.png'></img>
+				<div id='gameDiv'>
+					<div className={'Button-div'}><Button onClick={() => this.sendRequest('L')}>Left</Button></div>
+					<div className={'Button-div'}><Button onClick={() => this.sendRequest('R')}>Right</Button></div>
+					<div className={'Button-div'}><Button onClick={() => this.sendRequest('F')}>Forward</Button></div>
+					<div className={'Button-div'}><Button onClick={() => this.sendRequest('B')}>Back</Button></div>
+				</div>
 			</div>
 		);
 	}
