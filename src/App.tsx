@@ -9,9 +9,19 @@ interface IAppProps {}
 interface IAppState {
 	loading: boolean;
 	messageWebSocket?: WebSocket;
-	votes: IVotes;
+	votes?: IDirectionalDataObject;
 	totalClients: string;
 	currentClients: string;
+	totalVotes: string;
+	timeRemaining: number;
+	timerFunc?: NodeJS.Timeout;
+}
+
+interface IDirectionalDataObject {
+	'forward': number;
+	'left': number;
+	'right': number;
+	'back': number;
 }
 
 interface IEvent {
@@ -32,22 +42,83 @@ class App extends React.Component<IAppProps, IAppState> {
 			loading: true,
 			totalClients: '',
 			currentClients: '',
+			totalVotes: '',
 			votes: {
-				left: '',
-				right: '',
-				forward: '',
-				back: '',
-			}
+				left: 0,
+				right: 0,
+				forward: 0,
+				back: 0,
+			},
+			timeRemaining: 0
 		}
 		
 		//const videoWebSocket = new MediaStream;
 		//10.2.5.173:42069
 	}
 
-	handleMessageRecieved = (event: IEvent): void => {
-		const data = event.data
-		//if (data.con)
-		console.log(event.data)
+	timer = () => {
+		var count = this.state.timeRemaining;
+		this.setState({
+			timeRemaining: count - 1
+		});
+		if (count <= 0) {
+			this.setState({
+				timeRemaining: 5,
+				votes: {
+					left: 0,
+					right: 0,
+					forward: 0,
+					back: 0,
+				}
+			});
+		}
+	}
+
+	startTimer = () => {
+		var counter = setInterval(this.timer, 1000); //1000 will  run it every 1 second
+		this.setState({
+			timerFunc: counter,
+			timeRemaining: this.state.timeRemaining
+		});
+		
+	}
+
+	handleMessageRecieved = (event: IEvent ): void => {
+		const data: string = event.data
+
+		if (data.includes('time')) {
+			this.setState({
+				timeRemaining: Number(data.split(': ')[1])
+			}, () => {
+				this.startTimer();
+			});
+		}
+		else if (data.includes('total_votes')) {
+			this.setState({
+				totalVotes: data.split(': ')[1]
+			});
+		}
+		else if (data.includes('total')) {
+			this.setState({
+				totalClients: data.split(': ')[1]
+			});
+		}
+		else if (data.includes('current')) {
+			this.setState({
+				currentClients: data.split(': ')[1]
+			});
+		}
+		else if (data.includes('forward')) {
+			const newData = data.slice(1, data.length - 1)
+			this.setState({
+				votes: {
+					forward: Number((newData.split('forward\': ')[1].split(','))[0]),
+					back: Number((newData.split('back\': ')[1].split(','))[0]),
+					left: Number((newData.split('left\': ')[1].split(','))[0]),
+					right: Number((newData.split('right\': ')[1].split(','))[0]),
+				}
+			});
+		}
 	}
 
 	handleOnOpen = () => {
@@ -98,6 +169,8 @@ class App extends React.Component<IAppProps, IAppState> {
 					totalClients={this.state.totalClients}
 					currentClients={this.state.currentClients}
 					votes={this.state.votes}
+					totalVotes={this.state.totalVotes}
+					timer={this.state.timeRemaining}
 				></Play>
 				}
 			</div>

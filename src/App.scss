@@ -37,11 +37,15 @@ html, body {
     // margin: 0;
 	// height: 100%;
 	width: 100%;
-	overflow: hidden;
+	overflow: auto;
 }
 
 html {
 	//background-color: grey;
+}
+
+.timer {
+	margin-top: -25px
 }
 
 .button-div {
@@ -60,7 +64,20 @@ button {
 }
 
 .bx--btn {
-	min-height: 4.5rem;
+	min-height: 3.75rem;
+}
+
+.bx--tabs {
+	// width: 30%;
+	// display: inline-flex;
+}
+
+.stats-div {
+	margin-top: 200px;
+}
+
+.stat {
+	padding-bottom: 10px;
 }
 
 .bx--loading {
