@@ -6,18 +6,15 @@ interface IPlayPageState {
 	content: string;
 }
 
-// Gonna need player type
 interface IPlayPageProps {
 	messageWebSocket: WebSocket;
 }
-
-
 
 class Queue extends React.Component<IPlayPageProps, IPlayPageState> {
 	constructor(props: any) {
 		super(props)
 		this.state = {
-			content: ''
+			content: '',
 		}
 		// ArrowKeysReact.config({
 		// 	left: () => {
@@ -44,7 +41,9 @@ class Queue extends React.Component<IPlayPageProps, IPlayPageState> {
 	}
 
 	sendRequest = (direction: string) => {
-		this.props.messageWebSocket.send(direction)
+		if (!this.props.messageWebSocket.CONNECTING) {
+			this.props.messageWebSocket.send(direction)
+		}
 	}
 
 	componentDidMount() {
@@ -62,10 +61,10 @@ class Queue extends React.Component<IPlayPageProps, IPlayPageState> {
 		//{/*...ArrowKeysReact.events*/...}
 		return (
 		<div id='gameDiv'  tabIndex={0}>
-				<button onClick={() => this.sendRequest('L')}>Left</button>
-				<button onClick={() => this.sendRequest('R')}>Right</button>
-				<button onClick={() => this.sendRequest('F')}>Forward</button>
-				<button onClick={() => this.sendRequest('B')}>Back</button>
+				<div className={'button-div'}><button onClick={() => this.sendRequest('L')}>Left</button></div>
+				<div className={'button-div'}><button onClick={() => this.sendRequest('R')}>Right</button></div>
+				<div className={'button-div'}><button onClick={() => this.sendRequest('F')}>Forward</button></div>
+				<div className={'button-div'}><button onClick={() => this.sendRequest('B')}>Back</button></div>
 			</div>
 		);
 	}

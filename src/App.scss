@@ -28,6 +28,32 @@
   color: #61dafb;
 }
 
+#gameDiv {
+	margin: 20px;
+	width: 97%;
+}
+
+html, body {
+    margin: 0;
+	height: 100%;
+}
+
+html {
+	background-color: grey;
+}
+
+.button-div {
+	padding: 0 20px 20px 0;
+	//width: 200px;
+	//display: inline-block;
+}
+
+button {
+	width: 100%;
+	padding: 50px;
+	font-size: 24px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);

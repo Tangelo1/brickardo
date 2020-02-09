@@ -24,11 +24,9 @@ const App = () => {
 
 	return (
 		<div className='App'>
-			<main>
-				<Play
-					messageWebSocket={messageWebSocket}
-				></Play>
-			</main>
+			<Play
+				messageWebSocket={messageWebSocket}
+			></Play>
 		</div>
 	);
 }
