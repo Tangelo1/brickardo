@@ -38,7 +38,7 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "http://tangelo1.github.io/brickardo",
+  "homepage": "https://tangelo1.github.io/brickardo",
   "devDependencies": {
     "gh-pages": "^2.2.0"
   }
