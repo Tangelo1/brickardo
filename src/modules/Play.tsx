@@ -11,7 +11,7 @@ interface IPlayPageProps {
 	messageWebSocket?: WebSocket;
 }
 
-class Queue extends React.Component<IPlayPageProps, IPlayPageState> {
+class Play extends React.Component<IPlayPageProps, IPlayPageState> {
 	constructor(props: IPlayPageProps) {
 		super(props)
 		this.state = {
@@ -41,13 +41,14 @@ class Queue extends React.Component<IPlayPageProps, IPlayPageState> {
 		// });
 	}
 
-	sendRequest = (direction: string) => {
+	sendRequest = (message: string) => {
 		if (this.props.messageWebSocket) {
-			this.props.messageWebSocket.send(direction)
+			this.props.messageWebSocket.send(message)
 		}
 	}
 
 	componentDidMount() {
+		//this.sendRequest('Gimmie')
 		//this.focusGameDiv();
 	}
 
@@ -60,6 +61,7 @@ class Queue extends React.Component<IPlayPageProps, IPlayPageState> {
 
 	render() {
 		//{/*...ArrowKeysReact.events*/...}
+		//this.props.messageWebSocket?.send('Gimmie gimmie')
 		return (
 			<div>
 				<img width='200px' height='200px'src='https://brickhack.io/assets/bh-logos/brickhack-6-ec3ad60c77e9a5fda248640e5febf72cd59245e3e3407dea968bf343d987dc07.png'></img>
@@ -73,4 +75,4 @@ class Queue extends React.Component<IPlayPageProps, IPlayPageState> {
 		);
 	}
 }
-export default Queue;
+export default Play;

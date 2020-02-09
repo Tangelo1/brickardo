@@ -10,6 +10,11 @@ interface IAppState {
 	loading: boolean;
 	messageWebSocket?: WebSocket;
 }
+
+interface IEvent {
+	data: string;
+}
+
 class App extends React.Component<IAppProps, IAppState> {
 	constructor(props: IAppProps) {
 		super(props)
@@ -19,7 +24,10 @@ class App extends React.Component<IAppProps, IAppState> {
 		
 		//const videoWebSocket = new MediaStream;
 		//10.2.5.173:42069
+	}
 
+	handleMessageRecieved = (event: IEvent): void => {
+		console.log(event.data)
 	}
 
 	checkWebSocketConenction = () => {
@@ -31,15 +39,19 @@ class App extends React.Component<IAppProps, IAppState> {
 	}
 
 	componentDidMount = () => {
-		const messageWebSocket = new WebSocket('ws://10.2.5.173:42069');
+		const messageWebSocket = new WebSocket('ws://10.2.6.216:42069');
+		messageWebSocket.onmessage = (event: IEvent) => {
+			// on receiving a message, add it to the list of messages
+			console.log(event)
+		  }
 		this.setState({
 			messageWebSocket: messageWebSocket
 		}, () => { this.checkWebSocketConenction() });
+
 	}
 
 	// console.log(messageWebSocket)
 	// console.log(messageWebSocket.OPEN)
-	
 
 	//On recieve "youre up" message
 	//Update inQueue to false
