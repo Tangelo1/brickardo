@@ -64,6 +64,7 @@ async def on_new_client(websocket, path):
             await socket.send('total_votes: ' + str(total_votes))
             await socket.send('total: ' + str(total_collected_clients))
             await socket.send('current: ' + str(len(client_list)))
+            await socket.send('frbl: %s, %s, %s, %s' % (str(forward_votes), str(right_votes), str(back_votes), str(left_votes)))
             await socket.send(str(votes))
 
 
