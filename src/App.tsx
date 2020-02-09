@@ -15,6 +15,10 @@ interface IAppState {
 	totalVotes: string;
 	timeRemaining: number;
 	timerFunc?: NodeJS.Timeout;
+	frontTotal: number;
+	leftTotal: number;
+	rightTotal: number;
+	backTotal: number;
 }
 
 interface IDirectionalDataObject {
@@ -49,7 +53,11 @@ class App extends React.Component<IAppProps, IAppState> {
 				forward: 0,
 				back: 0,
 			},
-			timeRemaining: 0
+			timeRemaining: 0,
+			frontTotal: 0,
+			leftTotal: 0,
+			rightTotal: 0,
+			backTotal: 0,
 		}
 		
 		//const videoWebSocket = new MediaStream;
@@ -119,6 +127,18 @@ class App extends React.Component<IAppProps, IAppState> {
 				}
 			});
 		}
+		else if (data.includes('frbl')) {
+			this.setState({
+				frontTotal: Number((data.split(': ')[1].split(', '))[0]),
+				rightTotal: Number((data.split(': ')[1].split(', '))[1]),
+				backTotal: Number((data.split(': ')[1].split(', '))[2]),
+				leftTotal: Number((data.split(': ')[1].split(', '))[3]),
+
+			});
+		}
+		else {
+			console.log(data)
+		}
 	}
 
 	handleOnOpen = () => {
@@ -165,6 +185,10 @@ class App extends React.Component<IAppProps, IAppState> {
 					withOverlay={true}
 				/> :
 				<Play
+					frontTotal={this.state.frontTotal}
+					rightTotal={this.state.rightTotal}
+					backTotal={this.state.backTotal}
+					leftTotal={this.state.leftTotal}
 					messageWebSocket={this.state.messageWebSocket}
 					totalClients={this.state.totalClients}
 					currentClients={this.state.currentClients}

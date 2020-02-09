@@ -2,6 +2,7 @@ import React from 'react';
 import { Button } from 'carbon-components-react';
 import { Tabs } from 'carbon-components-react';
 import { Tab } from 'carbon-components-react';
+import { PieChart } from '@carbon/charts-react';
 //import Queue from './Queue';
 //import ArrowKeysReact from 'arrow-keys-react';
 
@@ -21,6 +22,10 @@ interface IPlayPageProps {
 	};
 	totalVotes: string;
 	timer: number;
+	frontTotal: number;
+	leftTotal: number;
+	rightTotal: number;
+	backTotal: number;
 }
 
 class Play extends React.Component<IPlayPageProps, IPlayPageState> {
@@ -75,6 +80,32 @@ class Play extends React.Component<IPlayPageProps, IPlayPageState> {
 	}
 
 	render() {
+		const pieChartOptions = {
+			title: "Stacked bar (discrete)",
+			axes: {
+				left: {
+					primary: true,
+					stacked: true
+				},
+				bottom: {
+					scaleType: "labels",
+					secondary: true
+				}
+			},
+			height: "500px",
+			width: '500px'
+		};
+
+
+		const data = {
+			labels: ["Forward moves", "Backward moves", "Left Moves", "Right Moves"],
+			datasets: [
+			  {
+				label: "Moves",
+				data: [this.props.frontTotal, this.props.backTotal, this.props.leftTotal, this.props.rightTotal]
+			  },
+			]
+		  }
 		//{/*...ArrowKeysReact.events*/...}
 		//this.props.messageWebSocket?.send('Gimmie gimmie')
 		return (
@@ -111,6 +142,13 @@ class Play extends React.Component<IPlayPageProps, IPlayPageState> {
 					</div>
 
 					
+				</Tab>
+				<Tab label={'Charts'}>
+					<h1 className='charts-header' >Voting breakdown</h1>
+					<PieChart
+						options={pieChartOptions}
+						data={data}>
+					</PieChart>
 				</Tab>
 			</Tabs>
 			
