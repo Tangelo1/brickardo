@@ -1,29 +1,28 @@
-from nanpy import ArduinoApi
-from nanpy import Stepper
-from nanpy.serialmanager import SerialManager
-from nanpy.arduinotree import ArduinoTree
+import serial
 
-STEPS_PER_REV = 2038
-VROOM = 5
+port = '/dev/ttyACM0'
 
-connection = SerialManager()
-print(connection)
+ard = serial.Serial(port,9600,timeout=5)
 
-a = ArduinoApi(connection=connection)
-leftStep = Stepper(8, 9, 10, 11)
-rightStep = Stepper(4, 5, 6, 7)
+def forward_motor():
+    ard.write(str.encode('w'))
+    print(ard.readline())
+    ard.write(str.encode(' '))
+
+def back_motor():
+    ard.write(str.encode('s'))
+    print(ard.readline())
+    ard.write(str.encode(' '))
+    
+def right_motor():
+    ard.write(str.encode('d'))
+    print(ard.readline())
+    ard.write(str.encode(' '))
+    
+def left_motor():
+    ard.write(str.encode('a'))
+    print(ard.readline())
+    ard.write(str.encode(' '))
 
 
-if __name__ == '__main__':
-
-    leftStep.setSpeed(VROOM)
-    rightStep.setSpeed(VROOM)
-
-    while True:
-
-        a = ArduinoTree(connection=connection)
-        print(a)
-        a.soft_reset()
-        print(a)
-        leftStep.step(STEPS_PER_REV)
-        rightStep.step(STEPS_PER_REV)
+    
