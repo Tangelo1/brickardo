@@ -23,7 +23,17 @@ def motor_controller():
         if max(votes.values()) == 0:
             print('No Votes')
         else:
-            print(max(votes.items(), key=operator.itemgetter(1))[0])
+            vote = max(votes.items(), key=operator.itemgetter(1))[0]
+            if vote == 'forward':
+                forward_motor()
+            elif vote == 'back':
+                back_motor()
+            elif vote == 'right':
+                right_motor()
+            elif vote == 'left':
+                left_motor()
+            else:
+                pass
         votes['forward'] = 0
         votes['back'] = 0
         votes['right'] = 0
