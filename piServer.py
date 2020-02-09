@@ -44,6 +44,7 @@ async def on_new_client(websocket, path):
 
         total_collected_clients += 1
         for socket in client_list:
+            await socket.send('total_votes: ' + str(total_collected_clients))
             await socket.send('total: ' + str(total_collected_clients))
 
 
