@@ -7,8 +7,11 @@ import asyncio
 
 total_collected_clients = 0
 total_votes = 0
-#HOST = '10.2.5.173'
-HOST = '10.2.6.216'
+#Pi
+HOST = '10.2.5.173'
+
+#Tylers Machine
+#HOST = '10.2.6.216'
 PORT = 42069
 votes = {'forward': 0, 'back': 0, 'left': 0, 'right': 0}
 client_list = []
