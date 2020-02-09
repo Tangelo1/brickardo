@@ -41,7 +41,7 @@ class App extends React.Component<IAppProps, IAppState> {
 		this.state = {
 			loading: true,
 			totalClients: '',
-			currentClients: '',
+			currentClients: '1',
 			totalVotes: '',
 			votes: {
 				left: 0,
