@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/brickardo/precache-manifest.1f4b5ac09b46da4da1c9f3d2cd10aa3d.js"
+  "/brickardo/precache-manifest.755bebdc87053a628820a16b1a33da50.js"
 );
 
 self.addEventListener('message', (event) => {
