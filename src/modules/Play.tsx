@@ -9,6 +9,14 @@ interface IPlayPageState {
 
 interface IPlayPageProps {
 	messageWebSocket?: WebSocket;
+	totalClients: string;
+	currentClients: string;
+	votes: {
+		left: string;
+		right: string;
+		forward: string;
+		back: string;
+	};
 }
 
 class Play extends React.Component<IPlayPageProps, IPlayPageState> {
@@ -42,9 +50,7 @@ class Play extends React.Component<IPlayPageProps, IPlayPageState> {
 	}
 
 	sendRequest = (message: string) => {
-		if (this.props.messageWebSocket) {
-			this.props.messageWebSocket.send(message)
-		}
+		this.props.messageWebSocket?.send(message)
 	}
 
 	componentDidMount() {
@@ -64,6 +70,7 @@ class Play extends React.Component<IPlayPageProps, IPlayPageState> {
 		//this.props.messageWebSocket?.send('Gimmie gimmie')
 		return (
 			<div>
+				<h1 className='title-heading'><b>Brickardo!</b></h1>
 				<img width='200px' height='200px'src='https://brickhack.io/assets/bh-logos/brickhack-6-ec3ad60c77e9a5fda248640e5febf72cd59245e3e3407dea968bf343d987dc07.png'></img>
 				<div id='gameDiv'>
 					<div className={'Button-div'}><Button onClick={() => this.sendRequest('L')}>Left</Button></div>
